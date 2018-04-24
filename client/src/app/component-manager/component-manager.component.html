@@ -1,0 +1,59 @@
+<h2>Java Components</h2>
+
+<table class="table table-hover" *ngIf="javaComponents.length > 0">
+  <thead>
+  <tr>
+    <th scope="col">ID</th>
+    <th scope="col">Name</th>
+    <th scope="col">State</th>
+    <th scope="col">Scope</th>
+    <th scope="col"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let javaComponent of javaComponents" [ngbPopover]="popContent" popoverTitle="Component Log"
+      placement="bottom" #p="ngbPopover" triggers="manual">
+    <ng-template #popContent>
+      <pre><span *ngFor="let message of javaComponent.logMessages">{{ message }}<br></span></pre>
+    </ng-template>
+    <th (click)="p.toggle()" scope="row">
+      <span placement="top" ngbTooltip="{{javaComponent.id}}">
+        {{javaComponent.id | slice:0:3}}...{{javaComponent.id | slice:-1}}
+      </span>
+    </th>
+    <td (click)="p.toggle()">{{javaComponent.name}}</td>
+    <td (click)="p.toggle()">{{javaComponent.state}}</td>
+    <td (click)="p.toggle()">{{javaComponent.scope}}</td>
+    <td>
+      <div ngbDropdown class="d-inline-block" *ngIf="javaComponent.state != state.Unloaded">
+        <button id="actions" class="btn btn-sm btn-outline-secondary" ngbDropdownToggle>Actions</button>
+        <div ngbDropdownMenu aria-labelledby="actions">
+          <button class="dropdown-item" (click)="startJavaComponent(javaComponent.id)">Start</button>
+          <button class="dropdown-item" (click)="stopJavaComponent(javaComponent.id)">Stop</button>
+          <button class="dropdown-item" (click)="unloadJavaComponent(javaComponent.id)">Unload</button>
+          <div class="dropdown-divider"></div>
+          <button class="dropdown-item" (click)="setScope(javaComponent.id, scope.UnderTest)">
+            Under Test
+          </button>
+          <button class="dropdown-item" (click)="setScope(javaComponent.id, scope.InProduction)">
+            In Production
+          </button>
+          <button class="dropdown-item" (click)="setScope(javaComponent.id, scope.UnderInspection)">
+            Under Inspection
+          </button>
+          <button class="dropdown-item" (click)="setScope(javaComponent.id, scope.InMaintenance)">
+            In Maintenance
+          </button>
+        </div>
+      </div>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<div class="float-left">
+  <input #file type="file" accept=".jar">
+  <button type="button" class="btn btn-secondary" (click)="uploadJavaComponent(file.files[0]); file.value=''">
+    Upload
+  </button>
+</div>

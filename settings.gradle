@@ -1,0 +1,6 @@
+rootProject.name = 'cre-web'
+
+includeBuild '../cre-component-runtime'
+includeBuild '../cre-commons'
+include 'server'
+include 'client'

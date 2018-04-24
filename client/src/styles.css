@@ -1,0 +1,16 @@
+body {
+  padding-top: 5rem;
+}
+
+.popover {
+  max-width: 640px;
+}
+
+.popover-body {
+  max-height: 200px;
+  overflow: scroll;
+}
+
+.popover-body pre {
+  overflow: unset;
+}
